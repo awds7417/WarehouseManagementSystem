@@ -1,0 +1,80 @@
+﻿@model WarehouseManagementSystem.Models.InventoryTransaction
+
+@{
+    ViewBag.Title = "新增進出貨紀錄";
+}
+
+<h2>新增進出貨紀錄</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.TxDate, "日期時間", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.TxDate, "{0:yyyy-MM-dd HH:mm}", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.TxDate)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("類型", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.TxType,
+                    new SelectList(new[]
+                    {
+                        new { Value = "IN", Text = "入庫" },
+                        new { Value = "OUT", Text = "出庫" }
+                    }, "Value", "Text", Model.TxType),
+                    new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.TxType)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.ProductId, "產品", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.ProductId, (SelectList)ViewBag.ProductId, "請選擇產品", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ProductId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.CustomerId, "客戶", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.CustomerId, (SelectList)ViewBag.CustomerId, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CustomerId)
+                <p class="help-block">一般入庫/調整可以不選客戶。</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Quantity, "數量", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Quantity)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Remark, "備註", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Remark, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Remark)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="儲存" class="btn btn-primary" />
+                @Html.ActionLink("返回列表", "Index", null, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+}
+

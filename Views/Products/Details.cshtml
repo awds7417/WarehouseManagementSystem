@@ -1,0 +1,32 @@
+﻿@model WarehouseManagementSystem.Models.Product
+
+@{
+    ViewBag.Title = "產品明細";
+}
+
+<h2>產品明細</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>Id</dt>
+        <dd>@Model.Id</dd>
+
+        <dt>料號</dt>
+        <dd>@Model.ProductCode</dd>
+
+        <dt>名稱</dt>
+        <dd>@Model.Name</dd>
+
+        <dt>單位</dt>
+        <dd>@Model.Unit</dd>
+
+        <dt>安全庫存</dt>
+        <dd>@Model.SafeStockQty</dd>
+    </dl>
+</div>
+
+<p>
+    @Html.ActionLink("回列表", "Index") |
+    @Html.ActionLink("編輯", "Edit", new { id = Model.Id })
+</p>
+

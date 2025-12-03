@@ -1,0 +1,71 @@
+﻿@model WarehouseManagementSystem.Models.CustomerListViewModel
+
+@{
+    ViewBag.Title = "客戶列表";
+}
+
+<h2>客戶列表</h2>
+
+<p>
+    @Html.ActionLink("新增客戶", "Create", null, new { @class = "btn btn-primary" })
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>客戶代號</th>
+            <th>名稱</th>
+            <th>聯絡人</th>
+            <th>電話</th>
+            <th>地址</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Items != null)
+        {
+            foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.CustomerCode</td>
+                    <td>@item.Name</td>
+                    <td>@item.ContactPerson</td>
+                    <td>@item.Phone</td>
+                    <td>@item.Address</td>
+                    <td>
+                        @Html.ActionLink("明細", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("編輯", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("刪除", "Delete", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@if (Model.TotalPages > 1)
+{
+    <ul class="pagination">
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            if (i == Model.PageIndex)
+            {
+                <li class="active">
+                    <span>@i <span class="sr-only">(current)</span></span>
+                </li>
+            }
+            else
+            {
+                <li>
+                    @Html.ActionLink(
+                        i.ToString(),
+                        "Index",
+                        new { page = i }
+                    )
+                </li>
+            }
+        }
+    </ul>
+}

@@ -1,0 +1,86 @@
+﻿@model WarehouseManagementSystem.Models.ProductListViewModel
+
+@{
+    ViewBag.Title = "產品列表";
+}
+
+<h2>產品列表</h2>
+
+@using (Html.BeginForm("Index", "Products", FormMethod.Get))
+{
+    <div class="form-inline">
+        <div class="form-group">
+            <label for="keyword">關鍵字：</label>
+            <input type="text"
+                   name="keyword"
+                   id="keyword"
+                   value="@Model.Keyword"
+                   class="form-control"
+                   placeholder="代號或名稱" />
+        </div>
+        <input type="submit" value="搜尋" class="btn btn-default" />
+        @Html.ActionLink("清除搜尋", "Index", null, new { @class = "btn btn-link" })
+    </div>
+}
+
+<p>
+    @Html.ActionLink("新增產品", "Create", null, new { @class = "btn btn-primary" })
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>產品代號</th>
+            <th>名稱</th>
+            <th>單位</th>
+            <th>安全庫存</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Items != null)
+        {
+            foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.ProductCode</td>
+                    <td>@item.Name</td>
+                    <td>@item.Unit</td>
+                    <td>@item.SafeStockQty</td>
+                    <td>
+                        @Html.ActionLink("明細", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("編輯", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("刪除", "Delete", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@if (Model.TotalPages > 1)
+{
+    <ul class="pagination">
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            if (i == Model.PageIndex)
+            {
+                <li class="active">
+                    <span>@i <span class="sr-only">(current)</span></span>
+                </li>
+            }
+            else
+            {
+                <li>
+                    @Html.ActionLink(
+                        i.ToString(),
+                        "Index",
+                        new { page = i, keyword = Model.Keyword }
+                    )
+                </li>
+            }
+        }
+    </ul>
+}

@@ -1,0 +1,83 @@
+﻿@model WarehouseManagementSystem.Models.InventoryStatusListViewModel
+
+@{
+    ViewBag.Title = "庫存現況";
+}
+
+<h2>庫存現況</h2>
+
+<p>
+    @Html.ActionLink("匯出 CSV", "ExportCsv", null, new { @class = "btn btn-default" })
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>產品代號</th>
+            <th>產品名稱</th>
+            <th>單位</th>
+            <th>總入庫量</th>
+            <th>總出庫量</th>
+            <th>目前庫存</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Items != null)
+        {
+            foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.ProductCode</td>
+                    <td>@item.ProductName</td>
+                    <td>@item.Unit</td>
+                    <td>@item.TotalIn</td>
+                    <td>@item.TotalOut</td>
+                    <td>@item.CurrentStock</td>
+                    <td>
+                        @Html.ActionLink(
+                        "入庫",
+                        "Create",
+                        "InventoryTransactions",
+                        new { productId = item.ProductId, txType = "IN" },
+                        new { @class = "btn btn-xs btn-success" }
+                    )
+                        @Html.Raw(" ")
+                        @Html.ActionLink(
+                        "出庫",
+                        "Create",
+                        "InventoryTransactions",
+                        new { productId = item.ProductId, txType = "OUT" },
+                        new { @class = "btn btn-xs btn-warning" }
+                    )
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@if (Model.TotalPages > 1)
+{
+    <ul class="pagination">
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            if (i == Model.PageIndex)
+            {
+                <li class="active">
+                    <span>@i <span class="sr-only">(current)</span></span>
+                </li>
+            }
+            else
+            {
+                <li>
+                    @Html.ActionLink(
+                        i.ToString(),
+                        "Index",
+                        new { page = i }
+                    )
+                </li>
+            }
+        }
+    </ul>
+}

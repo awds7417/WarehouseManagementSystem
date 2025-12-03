@@ -1,0 +1,35 @@
+﻿@model WarehouseManagementSystem.Models.Customer
+
+@{
+    ViewBag.Title = "客戶明細";
+}
+
+<h2>客戶明細</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>Id</dt>
+        <dd>@Model.Id</dd>
+
+        <dt>客戶代號</dt>
+        <dd>@Model.CustomerCode</dd>
+
+        <dt>名稱</dt>
+        <dd>@Model.Name</dd>
+
+        <dt>聯絡人</dt>
+        <dd>@Model.ContactPerson</dd>
+
+        <dt>電話</dt>
+        <dd>@Model.Phone</dd>
+
+        <dt>地址</dt>
+        <dd>@Model.Address</dd>
+    </dl>
+</div>
+
+<p>
+    @Html.ActionLink("回客戶列表", "Index") |
+    @Html.ActionLink("編輯這個客戶", "Edit", new { id = Model.Id })
+</p>
+
